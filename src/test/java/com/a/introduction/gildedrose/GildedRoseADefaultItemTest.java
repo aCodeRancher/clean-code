@@ -5,40 +5,60 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
 public class GildedRoseADefaultItemTest {
-	/**
-	 * Method to test the variation in quality of the item for the non expired
-	 * Item.
-	 * 
-	 * The quality should decrease by 1 when the item is not expired
-	 * and sell in should decrease by 1.
-	 * 
-	 */
+
+	private  int sellin;
+	private  int quantity;
+	private  final String DEFAULT_ITEM = "DEFAULT_ITEM";
+
+
 	@Test
 	public void testUpdateQualityDefault1() {
-		Item item = new Item("DEFAULT_ITEM", 15, 3);
-		Item[] items = new Item[] { item };
-		GildedRose app = new GildedRose(items);
+		setSellin(15);
+		setQuantity(3);
+		GildedRose app = createGildedRose(getSellin(),getQuantity());
 		app.updateQuality();
-		assertEquals("DEFAULT_ITEM", app.items[0].name);
-		assertEquals(14, app.items[0].sellIn);
-		assertEquals(2, app.items[0].quality);
+
+		int expectedSellin = 14;
+		int expectedQuantity = 2;
+		verifyItem(app, expectedSellin,expectedQuantity);
 	}
 
-	/**
-	 * Method to test the variation in quality of the item for the non expired
-	 * Item.
-	 * 
-	 * The quality should decrease by 2 when the item is expired(Sell in  < 0) and sell in should decrease by 1.
-	 * 
-	 */
+
 	@Test
 	public void testUpdateQualityForExpiredItem() {
-		Item item = new Item("DEFAULT_ITEM", -1, 3);
+		setSellin(-1);
+		setQuantity(3);
+        GildedRose app = createGildedRose(getSellin(),getQuantity());
+        app.updateQuality();
+
+		int expectedSellin = -2;
+		int expectedQuantity = 1;
+		verifyItem(app, expectedSellin, expectedQuantity);
+	}
+
+	private GildedRose createGildedRose(int sellin, int quantity){
+		Item item = new Item(DEFAULT_ITEM, sellin, quantity);
 		Item[] items = new Item[] { item };
 		GildedRose app = new GildedRose(items);
-		app.updateQuality();
-		assertEquals("DEFAULT_ITEM", app.items[0].name);
-		assertEquals(-2, app.items[0].sellIn);
-		assertEquals(1, app.items[0].quality);
+		return app;
+	}
+	private void setSellin(int value){
+		sellin =  value;
+	}
+	private int getSellin(){
+		return sellin;
+	}
+
+	private void setQuantity(int value){
+		quantity =  value;
+	}
+	private int getQuantity(){
+		return quantity;
+	}
+
+	private void verifyItem(GildedRose app, int expectedSellin, int expectedQuantity){
+		assertEquals(DEFAULT_ITEM, app.items[0].name);
+		assertEquals(expectedSellin, app.items[0].sellIn);
+		assertEquals(expectedQuantity, app.items[0].quality);
 	}
 }
