@@ -10,30 +10,14 @@ public class GildedRoseBAgedBrieTest {
 
 	@ParameterizedTest
 	@MethodSource("com.a.introduction.gildedrose.ItemsUtil#getItemsArgs")
-	public void  agedBrie_nonExpired_qualityIncreasedBy1(int sellin, int quality, int expectedSellin, int expectedQuality) {
+	public void  testAgedBrie(int sellin, int quality, int expectedSellin, int expectedQuality) {
 
 		GildedRose app = createGildedRose(sellin,quality);
 		app.updateQuality();
 		verifyItem(app,expectedSellin, expectedQuality);
 	}
 
-	@ParameterizedTest
-	@MethodSource("com.a.introduction.gildedrose.ItemsUtil#getItemsArgs")
-	public void agedBrie_expired_qualityIncreasedBy2(int sellin, int quality, int expectedSellin, int expectedQuality) {
 
-		GildedRose app = createGildedRose(sellin,quality);
-		app.updateQuality();
-		verifyItem(app, expectedSellin, expectedQuality);
-	}
-
-	@ParameterizedTest
-	@MethodSource("com.a.introduction.gildedrose.ItemsUtil#getItemsArgs")
-	public void agedBrie_nonExpired_quality50(int sellin, int quality, int expectedSellin, int expectedQuality) {
-
-		GildedRose app = createGildedRose(sellin,quality);
-		app.updateQuality();
-		verifyItem(app, expectedSellin, expectedQuality);
-	}
 
 	private GildedRose createGildedRose(int sellin , int quality){
 		Item item = new Item(ITEM_NAME, sellin, quality);
