@@ -7,32 +7,34 @@ import org.junit.jupiter.api.Test;
 public class GildedRoseADefaultItemTest {
 
 	private  int sellin;
-	private  int quantity;
+	private  int quality;
 	private  final String DEFAULT_ITEM = "DEFAULT_ITEM";
-
+	private final int EXPIRED_SELLIN = -1;
+	private final int NON_EXPIRED_SELLIN = 15;
+	private final int QUALITY = 3;
 
 	@Test
 	public void testUpdateQualityDefault1() {
-		setSellin(15);
-		setQuantity(3);
-		GildedRose app = createGildedRose(getSellin(),getQuantity());
+		setSellin(NON_EXPIRED_SELLIN);
+		setQuality(QUALITY);
+		GildedRose app = createGildedRose(getSellin(),getQuality());
 		app.updateQuality();
 
-		int expectedSellin = 14;
-		int expectedQuantity = 2;
+		int expectedSellin = NON_EXPIRED_SELLIN -1 ;
+		int expectedQuantity = QUALITY - 1;
 		verifyItem(app, expectedSellin,expectedQuantity);
 	}
 
 
 	@Test
 	public void testUpdateQualityForExpiredItem() {
-		setSellin(-1);
-		setQuantity(3);
-        GildedRose app = createGildedRose(getSellin(),getQuantity());
+		setSellin(EXPIRED_SELLIN);
+		setQuality(QUALITY);
+        GildedRose app = createGildedRose(getSellin(),getQuality());
         app.updateQuality();
 
-		int expectedSellin = -2;
-		int expectedQuantity = 1;
+		int expectedSellin = EXPIRED_SELLIN -1 ;
+		int expectedQuantity = QUALITY - 2;
 		verifyItem(app, expectedSellin, expectedQuantity);
 	}
 
@@ -49,11 +51,11 @@ public class GildedRoseADefaultItemTest {
 		return sellin;
 	}
 
-	private void setQuantity(int value){
-		quantity =  value;
+	private void setQuality(int value){
+		quality =  value;
 	}
-	private int getQuantity(){
-		return quantity;
+	private int getQuality(){
+		return quality;
 	}
 
 	private void verifyItem(GildedRose app, int expectedSellin, int expectedQuantity){
