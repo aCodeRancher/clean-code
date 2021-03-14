@@ -14,7 +14,7 @@ public class GildedRoseADefaultItemTest {
 	private final int QUALITY = 3;
 
 	@Test
-	public void testUpdateQualityDefault1() {
+	public void defaulItem_nonExpiredSellin_quantity_decreaseBy1() {
 		setSellin(NON_EXPIRED_SELLIN);
 		setQuality(QUALITY);
 		GildedRose app = createGildedRose(getSellin(),getQuality());
@@ -27,7 +27,7 @@ public class GildedRoseADefaultItemTest {
 
 
 	@Test
-	public void testUpdateQualityForExpiredItem() {
+	public void defaultItem_expiredSellin_quantity_decreaseBy2() {
 		setSellin(EXPIRED_SELLIN);
 		setQuality(QUALITY);
         GildedRose app = createGildedRose(getSellin(),getQuality());
