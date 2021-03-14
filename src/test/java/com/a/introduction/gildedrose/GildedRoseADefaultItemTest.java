@@ -1,41 +1,33 @@
 package com.a.introduction.gildedrose;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 public class GildedRoseADefaultItemTest {
 
-	private  int sellin;
-	private  int quality;
 	private  final String DEFAULT_ITEM = "DEFAULT_ITEM";
-	private final int EXPIRED_SELLIN = -1;
-	private final int NON_EXPIRED_SELLIN = 15;
-	private final int QUALITY = 3;
 
-	@Test
-	public void defaulItem_nonExpiredSellin_quantity_decreaseBy1() {
-		setSellin(NON_EXPIRED_SELLIN);
-		setQuality(QUALITY);
-		GildedRose app = createGildedRose(getSellin(),getQuality());
+
+	@ParameterizedTest
+	@MethodSource("com.a.introduction.gildedrose.ItemsUtil#getItemsArgs")
+	public void defaulItem_nonExpiredSellin_quantity_decreaseBy1(int nonExpiredSellin, int quality,
+																 int expected_sellin, int expectedQuality) {
+
+		GildedRose app = createGildedRose(nonExpiredSellin,quality);
 		app.updateQuality();
-
-		int expectedSellin = NON_EXPIRED_SELLIN -1 ;
-		int expectedQuantity = QUALITY - 1;
-		verifyItem(app, expectedSellin,expectedQuantity);
+        verifyItem(app, expected_sellin, expectedQuality);
 	}
 
 
-	@Test
-	public void defaultItem_expiredSellin_quantity_decreaseBy2() {
-		setSellin(EXPIRED_SELLIN);
-		setQuality(QUALITY);
-        GildedRose app = createGildedRose(getSellin(),getQuality());
-        app.updateQuality();
+	@ParameterizedTest
+	@MethodSource("com.a.introduction.gildedrose.ItemsUtil#getItemsArgs")
+	public void defaultItem_expiredSellin_quantity_decreaseBy2(int expiredSellin, int quality,
+															    int expected_sellin, int expectedQuality) {
 
-		int expectedSellin = EXPIRED_SELLIN -1 ;
-		int expectedQuantity = QUALITY - 2;
-		verifyItem(app, expectedSellin, expectedQuantity);
+        GildedRose app = createGildedRose(expiredSellin,quality);
+        app.updateQuality();
+        verifyItem(app, expected_sellin, expectedQuality);
 	}
 
 	private GildedRose createGildedRose(int sellin, int quantity){
@@ -44,19 +36,7 @@ public class GildedRoseADefaultItemTest {
 		GildedRose app = new GildedRose(items);
 		return app;
 	}
-	private void setSellin(int value){
-		sellin =  value;
-	}
-	private int getSellin(){
-		return sellin;
-	}
 
-	private void setQuality(int value){
-		quality =  value;
-	}
-	private int getQuality(){
-		return quality;
-	}
 
 	private void verifyItem(GildedRose app, int expectedSellin, int expectedQuantity){
 		assertEquals(DEFAULT_ITEM, app.items[0].name);
