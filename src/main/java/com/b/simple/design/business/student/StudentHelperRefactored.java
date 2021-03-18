@@ -5,6 +5,10 @@ public class StudentHelperRefactored {
 	private static final int EXTRA_FOR_MATHS = 10;
 	private static final int GRADE_B_UPPER_LIMIT = 80;
 	private static final int GRADE_B_LOWER_LIMIT = 51;
+	private final int GOOD_INDICATOR = 1;
+	private final int NOTGOOD_INDICATOR = 2;
+	private final int MAYBE_INDICATOR = 3;
+
 
 	/* PROBLEM 1 */	
 	/*
@@ -58,23 +62,24 @@ public class StudentHelperRefactored {
         
     public String willQualifyForQuiz(int marks1, int marks2, boolean isMaths) {
         
-    	if (isNotGood(marks1, isMaths) || isNotGood(marks2, isMaths)) 
+    	if (isGood(marks1, isMaths) == NOTGOOD_INDICATOR|| isGood(marks2, isMaths) == NOTGOOD_INDICATOR)
         	return "NO";
         
-    	if (isGood(marks1, isMaths) || isGood(marks2, isMaths))
+    	if (isGood(marks1, isMaths) == GOOD_INDICATOR || isGood(marks2, isMaths) == GOOD_INDICATOR)
     		return "YES";
         
     	return "MAYBE";
     }
 
-	private boolean isGood(int marks, boolean isMaths) {
-		int extraLimit = isMaths ? 5 : 0; 
-		return marks >= 80 + extraLimit;
-	}
-
-	private boolean isNotGood(int marks, boolean isMaths) {
+	private int isGood(int marks, boolean isMaths){
 		int extraLimit = isMaths ? 5 : 0;
-		return marks <= 20 + extraLimit;
-	}	
+		if (marks >= 80 + extraLimit)
+			return GOOD_INDICATOR;
+		else if (marks <= 20 + extraLimit)
+			  return NOTGOOD_INDICATOR;
+		else
+			return MAYBE_INDICATOR;
+    }
+
 
 }
