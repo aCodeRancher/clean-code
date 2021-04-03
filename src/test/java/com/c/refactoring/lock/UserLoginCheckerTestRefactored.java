@@ -15,7 +15,7 @@ public class UserLoginCheckerTestRefactored {
 	private static final int SOME_ID = 10;
 	private static final boolean IS_FIRST_SCREEN_TRUE = true;
 	private static final boolean IS_FIRST_SCREEN_FALSE = false;
-	UserLoginChecker userLoginChecker = new UserLoginChecker();
+	UserLoginCheckerRefactored userLoginChecker = new UserLoginCheckerRefactored();
 
 	@Test
 	public void testisUserAllowedToLogin_DifferentUserTriesImmediatelyAfter() {
